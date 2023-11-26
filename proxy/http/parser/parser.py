@@ -344,7 +344,7 @@ class HttpParser:
             total_size = int(self.header(b'content-length'))
             received_size = len(self.body)
             self.body += raw[:total_size - received_size]
-            print(self.body)
+            print(total_size)
             if self.body and \
                     len(self.body) == int(self.header(b'content-length')):
                 self.state = httpParserStates.COMPLETE
