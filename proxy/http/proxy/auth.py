@@ -41,6 +41,8 @@ class AuthPlugin(HttpProxyBasePlugin):
                     if contentstr.find('ok')>=0:
                         print('checkuser ok')
                         return 1
+                    else:
+                        return 0
                 except:
                     print('loi  checkuser')
                 time.sleep(1)
