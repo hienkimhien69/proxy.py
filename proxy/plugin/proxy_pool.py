@@ -212,6 +212,8 @@ class ProxyPoolPlugin(TcpUpstreamConnectionHandler, HttpProxyBasePlugin):
         return None
 
     def access_log(self, log_attrs: Dict[str, Any]) -> None:
+        print('log')
+        print(self.total_size)
         access_log_format = DEFAULT_HTTPS_ACCESS_LOG_FORMAT
         request_method = self._metadata[3]
         if request_method and request_method != httpMethods.CONNECT:
