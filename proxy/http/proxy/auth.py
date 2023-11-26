@@ -20,17 +20,19 @@ import base64
 from ...http import httpHeaders
 from ..exception import ProxyAuthenticationFailed
 from ...http.proxy import HttpProxyBasePlugin
-from ...http.parser import HttpParser
+import json
 
 stattime=int(time.time())
 datacheck=0
+allacc={}
 class AuthPlugin(HttpProxyBasePlugin):
     """Performs proxy authentication."""
     def checkuser(user,password):
         global stattime
         global datacheck
+        global allacc
         entime=int(time.time())
-        if stattime-entime>=60 or datacheck==0:
+        if stattime-entime>=60 or len(allacc)>=0:
             stattime=int(time.time())
             for i in range(1,60):
                 print("checkuser: "+ str(i))
@@ -38,16 +40,33 @@ class AuthPlugin(HttpProxyBasePlugin):
                     url = 'http://sellgmail.us:5050/api/action=checkuser_proxy&user='+user+'&pass='+password
                     response = requests.get(url,timeout=30)
                     contentstr=str(response.content)
-                    if contentstr.find('ok')>=0:
-                        print('checkuser ok')
-                        return 1
+                    if len(contentstr)>=5:
+                        data_txt=contentstr.replace("'",'"')
+                        allacc = json.loads(data_txt)
+                        try:
+                            checkpass=allacc[user]["pass"]
+                            if checkpass==password:
+                                return 1
+                            else:
+                                return 0
+                        except:
+                            print("sai tk|mk")
+                            return 0
                     else:
                         return 0
                 except:
                     print('loi  checkuser')
                 time.sleep(1)
         else:
-            return datacheck
+            try:
+                checkpass=allacc[user]["pass"]
+                if checkpass==password:
+                    return 1
+                else:
+                    return 0
+            except:
+                print("sai tk|mk")
+                return 0
         
     def before_upstream_connection(
             self, request: HttpParser,
