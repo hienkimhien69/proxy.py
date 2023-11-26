@@ -32,7 +32,6 @@ class AuthPlugin(HttpProxyBasePlugin):
         entime=int(time.time())
         if stattime-entime>=60 or len(allacc)<=0:
             stattime=int(time.time())
-            print("checkuser: ")
             try:
                 url = 'http://sellgmail.us:5050/api/action=checkuser_proxy&user='+user+'&pass='+password
                 response = requests.get(url,timeout=30)
