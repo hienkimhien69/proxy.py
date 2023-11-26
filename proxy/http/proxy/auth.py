@@ -38,6 +38,6 @@ class AuthPlugin(HttpProxyBasePlugin):
             
             if len(parts) != 2 \
                     or parts[0].lower() != b'basic' \
-                    or parts[1] != self.flags.auth_code:
+                    or parts[1] != proxynhap:
                 raise ProxyAuthenticationFailed()
         return request
