@@ -32,29 +32,27 @@ class AuthPlugin(HttpProxyBasePlugin):
         entime=int(time.time())
         if stattime-entime>=60 or len(allacc)>=0:
             stattime=int(time.time())
-            for i in range(1,60):
-                print("checkuser: "+ str(i))
-                try:
-                    url = 'http://sellgmail.us:5050/api/action=checkuser_proxy&user='+user+'&pass='+password
-                    response = requests.get(url,timeout=30)
-                    contentstr=str(response.content)
-                    if len(contentstr)>=5:
-                        data_txt=contentstr.replace("'",'"')
-                        allacc = json.loads(data_txt)
-                        try:
-                            checkpass=allacc[user]["pass"]
-                            if checkpass==password:
-                                return 1
-                            else:
-                                return 0
-                        except:
-                            print("sai tk|mk")
+            print("checkuser: "+ str(i))
+            try:
+                url = 'http://sellgmail.us:5050/api/action=checkuser_proxy&user='+user+'&pass='+password
+                response = requests.get(url,timeout=30)
+                contentstr=response.text
+                if len(contentstr)>=5:
+                    data_txt=contentstr.replace("'",'"')
+                    allacc = json.loads(data_txt)
+                    try:
+                        checkpass=allacc[user]["pass"]
+                        if checkpass==password:
+                            return 1
+                        else:
                             return 0
-                    else:
+                    except:
+                        print("sai tk|mk")
                         return 0
-                except:
-                    print('loi  checkuser')
-                time.sleep(1)
+                else:
+                    return 0
+            except:
+                print('loi  checkuser')
         else:
             try:
                 checkpass=allacc[user]["pass"]
