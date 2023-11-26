@@ -30,7 +30,7 @@ class AuthPlugin(HttpProxyBasePlugin):
         global stattime
         global allacc
         entime=int(time.time())
-        if stattime-entime>=60 or len(allacc)>=0:
+        if stattime-entime>=60 or len(allacc)<=0:
             stattime=int(time.time())
             print("checkuser: ")
             try:
@@ -47,7 +47,7 @@ class AuthPlugin(HttpProxyBasePlugin):
                         else:
                             return 0
                     except:
-                        print("sai tk|mk")
+                        print("sai tk|mk:" + user+'|'+password)
                         return 0
                 else:
                     return 0
@@ -61,7 +61,7 @@ class AuthPlugin(HttpProxyBasePlugin):
                 else:
                     return 0
             except:
-                print("sai tk|mk")
+                print("sai tk|mk:" + user+'|'+password)
                 return 0
         
     def before_upstream_connection(
@@ -81,11 +81,11 @@ class AuthPlugin(HttpProxyBasePlugin):
             else :
                 decoded_data = base64.b64decode(parts[1])
                 result = decoded_data.decode('utf-8').split(':')
-                print(result[0])
-                print(result[1])
+                #print(result[0])
+                #print(result[1])
                 datacheck=AuthPlugin.checkuser(result[0],result[1])
                 if datacheck==1:
-                    print("xac thuc ok")
+                    print("xac thuc ok:"+ result[0]+'|'+result[1])
                 else:
                     raise ProxyAuthenticationFailed()
         return request
