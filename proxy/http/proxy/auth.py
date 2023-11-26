@@ -21,15 +21,13 @@ from ...http import httpHeaders
 from ..exception import ProxyAuthenticationFailed
 from ...http.proxy import HttpProxyBasePlugin
 import json
-
+from ...http.parser import HttpParser
 stattime=int(time.time())
-datacheck=0
 allacc={}
 class AuthPlugin(HttpProxyBasePlugin):
     """Performs proxy authentication."""
     def checkuser(user,password):
         global stattime
-        global datacheck
         global allacc
         entime=int(time.time())
         if stattime-entime>=60 or len(allacc)>=0:
@@ -74,7 +72,6 @@ class AuthPlugin(HttpProxyBasePlugin):
         #print(httpHeaders.PROXY_AUTHORIZATION)
         #print("code")
         #print(self.flags.auth_code)
-        global datacheck
         if self.flags.auth_code and request.headers:
             if httpHeaders.PROXY_AUTHORIZATION not in request.headers:
                 raise ProxyAuthenticationFailed()
