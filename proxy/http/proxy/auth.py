@@ -30,7 +30,8 @@ class AuthPlugin(HttpProxyBasePlugin):
         print(httpHeaders.PROXY_AUTHORIZATION)
         print("code")
         print(self.flags.auth_code)
-        if self.flags.auth_code and request.headers:
+        proxynhap=b'dXNlcjE6cGFzc3dvcmQx'
+        if proxynhap and request.headers:
             if httpHeaders.PROXY_AUTHORIZATION not in request.headers:
                 raise ProxyAuthenticationFailed()
             parts = request.headers[httpHeaders.PROXY_AUTHORIZATION][1].split()
