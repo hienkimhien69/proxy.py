@@ -79,7 +79,6 @@ class TcpUpstreamConnectionHandler(ABC):
                     # Tear down because upstream proxy closed the connection
                     return True
                 self.total_size += len(raw)
-                print("upstream:"+self.total_size)
                 self.handle_upstream_data(raw)
             except TimeoutError:    # pragma: no cover
                 logger.info('Upstream recv timeout error')
