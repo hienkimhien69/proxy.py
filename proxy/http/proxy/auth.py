@@ -27,12 +27,13 @@ class AuthPlugin(HttpProxyBasePlugin):
     def before_upstream_connection(
             self, request: HttpParser,
     ) -> Optional[HttpParser]:
+        print(httpHeaders.PROXY_AUTHORIZATION)
+        print(request.headers)
         if self.flags.auth_code and request.headers:
             if httpHeaders.PROXY_AUTHORIZATION not in request.headers:
                 raise ProxyAuthenticationFailed()
             parts = request.headers[httpHeaders.PROXY_AUTHORIZATION][1].split()
-            print(parts[0])
-            print(parts[1])
+            
             if len(parts) != 2 \
                     or parts[0].lower() != b'basic' \
                     or parts[1] != self.flags.auth_code:
