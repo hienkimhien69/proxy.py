@@ -28,7 +28,8 @@ class AuthPlugin(HttpProxyBasePlugin):
             self, request: HttpParser,
     ) -> Optional[HttpParser]:
         print(httpHeaders.PROXY_AUTHORIZATION)
-        print(request.headers)
+        print("code")
+        print(self.flags.auth_code)
         if self.flags.auth_code and request.headers:
             if httpHeaders.PROXY_AUTHORIZATION not in request.headers:
                 raise ProxyAuthenticationFailed()
