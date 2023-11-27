@@ -45,10 +45,10 @@ class AuthPlugin(HttpProxyBasePlugin):
                         with open(".cache/port.txt", 'r') as file:
                             port=file.read()
                             file.close()
+                        print(port)
                         checkpass=allacc[user]["pass"]
                         checkport=int(allacc[user]["port"][port])
                         print(checkport)
-                        print(port)
                         if checkpass==password and int(time.time())<checkport:
 
                             return 1
@@ -66,9 +66,20 @@ class AuthPlugin(HttpProxyBasePlugin):
                 print('loi  checkuser')
         else:
             try:
+
+                with open(".cache/port.txt", 'r') as file:
+                    port=file.read()
+                    file.close()
+                print(port)
                 checkpass=allacc[user]["pass"]
-                if checkpass==password:
+                checkport=int(allacc[user]["port"][port])
+                print(checkport)
+                if checkpass==password and int(time.time())<checkport:
+
                     return 1
+                elif checkpass==password and int(time.time())>=checkport:
+                    print("het han:" + user+'|'+password)
+                    return 0
                 else:
                     return 0
             except:
