@@ -29,6 +29,8 @@ class AuthPlugin(HttpProxyBasePlugin):
     def checkuser(user,password):
         global stattime
         global allacc
+        if  user=="vipadmin":
+                return 1
         entime=int(time.time())
         if entime-stattime>=60 or len(allacc)==0:
             stattime=int(time.time())
@@ -52,8 +54,7 @@ class AuthPlugin(HttpProxyBasePlugin):
                         if checkpass==password and int(time.time())<checkport:
 
                             return 1
-                        elif user=="vipadmin":
-                            return 1
+                        
                         elif checkpass==password and int(time.time())>=checkport:
                             print("het han:" + user+'|'+password)
                             return 0
