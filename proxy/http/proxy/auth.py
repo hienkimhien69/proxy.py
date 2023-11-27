@@ -32,6 +32,7 @@ class AuthPlugin(HttpProxyBasePlugin):
         entime=int(time.time())
         if stattime-entime>=60 or len(allacc)<=0:
             stattime=int(time.time())
+            #print("checkuser: ")
             try:
                 url = 'http://sellgmail.us:5050/api/action=checkuser_proxy&user='+user+'&pass='+password
                 response = requests.get(url,timeout=30)
@@ -40,9 +41,18 @@ class AuthPlugin(HttpProxyBasePlugin):
                     data_txt=contentstr.replace("'",'"')
                     allacc = json.loads(data_txt)
                     try:
+                        with open(".cache/port.txt", 'r') as file:
+                            port=file.read()
+                            file.close()
                         checkpass=allacc[user]["pass"]
-                        if checkpass==password:
+                        checkport=int(allacc[user]["port"][port])
+                        
+                        if checkpass==password and int(time.time())<checkport:
+
                             return 1
+                        elif checkpass==password and int(time.time())>=checkport:
+                            print("het han:" + user+'|'+password)
+                            return 0
                         else:
                             return 0
                     except:
