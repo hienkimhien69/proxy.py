@@ -41,12 +41,14 @@ class AuthPlugin(HttpProxyBasePlugin):
                     data_txt=contentstr.replace("'",'"')
                     allacc = json.loads(data_txt)
                     try:
+
                         with open(".cache/port.txt", 'r') as file:
                             port=file.read()
                             file.close()
+                        print(port)
                         checkpass=allacc[user]["pass"]
                         checkport=int(allacc[user]["port"][port])
-                        
+                        print(checkport)
                         if checkpass==password and int(time.time())<checkport:
 
                             return 1
