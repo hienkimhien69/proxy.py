@@ -30,7 +30,7 @@ class AuthPlugin(HttpProxyBasePlugin):
         global stattime
         global allacc
         entime=int(time.time())
-        if stattime-entime>=60 or len(allacc)<=0:
+        if entime-stattime>=60 or len(allacc)==0:
             stattime=int(time.time())
             #print("checkuser: ")
             try:
