@@ -47,6 +47,8 @@ class AuthPlugin(HttpProxyBasePlugin):
                             file.close()
                         checkpass=allacc[user]["pass"]
                         checkport=int(allacc[user]["port"][port])
+                        print(checkport)
+                        print(port)
                         if checkpass==password and int(time.time())<checkport:
 
                             return 1
