@@ -246,7 +246,7 @@ class HttpParser:
         Check for `HttpParser.state` after `parse` has successfully returned."""
         size = len(raw)
         self.total_size += size
-        print("tatca:"+str(size))
+        #print("tatca:"+str(size))
         if self.buffer:
             # TODO(abhinavsingh): Instead of tobytes our parser
             # must be capable of working with arrays of memoryview
